@@ -38,6 +38,7 @@ def create_short_link():
     url = request.args.get('url')
     if not url or not re.match(r'^https?:/{2}\w.+$', url):
         return {'success': False, 'message': '参数url不合法'}
+
     short_key = ''.join(random.sample(SOURCE_KEYS, 8))  # 数据库建了唯一索引，若重复提醒用户重试
     sl = ShortLink(short_key=short_key, source_url=url, created_time=datetime.now())
     db.session.add(sl)
